@@ -10,9 +10,8 @@ public class QueueByArry {
         queue.addQueue(0);
         queue.addQueue(4);
         queue.addQueue(7);
-//        System.out.println(queue.getQueue());
-//        System.out.println(queue.getQueue());
-//        System.out.println(queue.headQueue());
+        System.out.println(queue.getQueue());
+        System.out.println(queue.getQueue());
         queue.showQueue();
 
     }
