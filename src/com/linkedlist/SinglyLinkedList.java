@@ -17,10 +17,9 @@ public class SinglyLinkedList {
         list.addNodeOrderByNo(node4);
         list.showList();
         System.out.println("------------");
-        HeroNode node5 = new HeroNode(5,"狗蛋");
-        list.alterNode(node5);
-        list.showList();
-
+        System.out.println("list length: " + list.getlength(list.head));
+        HeroNode node = list.getLastNode(list.head,4);
+        System.out.println(node);
     }
 }
 
@@ -129,6 +128,11 @@ class SingleList {
     public void deleteNode(int no){
         HeroNode temp = head;
         while(true){
+            /**到达链表结尾*/
+            if(null == temp.next){
+                System.out.println("没有找到匹配的no号，无法删除");
+                break;
+            }
             if(no == temp.next.no){
                 temp.next = temp.next.next;
                 break;
@@ -167,5 +171,38 @@ class SingleList {
         else {
             System.out.println("没有找到该节点信息，不能修改");
         }
+    }
+
+    /**得到单链表的倒数第k个节点信息,找不到则返回null*/
+    public HeroNode getLastNode(HeroNode head,int index){
+        if(null == head.next){
+            return null;
+        }
+        HeroNode temp = head.next;
+        int size = this.getlength(head);
+        for(int i = 0;i < size - index;i++){
+            temp = temp.next;
+        }
+        return temp;
+    }
+
+    /**获取链表中有效节点的个数*/
+    public int getlength(HeroNode head){
+        if(null == head.next){
+            System.out.println("链表为空");
+            return 0;
+        }
+        int count = 0;
+        HeroNode temp = head.next;
+        while(true){
+            if(null == temp){
+                break;
+            }
+            else {
+                count++;
+                temp = temp.next;
+            }
+        }
+        return count;
     }
 }
