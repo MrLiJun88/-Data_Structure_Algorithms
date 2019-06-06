@@ -1,5 +1,7 @@
 package com.linkedlist;
 
+import java.util.Stack;
+
 /**
  * 创建带head结点的单向链表
  */
@@ -16,10 +18,11 @@ public class SinglyLinkedList {
         list.addNodeOrderByNo(node3);
         list.addNodeOrderByNo(node4);
         list.showList();
+//        System.out.println("------------");
+//        list.reverseNode(list.head);
+//        list.showList();
         System.out.println("------------");
-        System.out.println("list length: " + list.getlength(list.head));
-        HeroNode node = list.getLastNode(list.head,4);
-        System.out.println(node);
+        list.reverseOrder(list.head);
     }
 }
 
@@ -204,5 +207,53 @@ class SingleList {
             }
         }
         return count;
+    }
+
+    /**实现节点的反转
+     * 思路：先定义一个节点 reverseNode = new HeroNode()
+     * 从头遍历原来的链表，将节点放在reverseNode的最前面
+     * 最后将head.next = reverseNode.next
+     */
+    public void reverseNode(HeroNode head){
+
+        if(null == head.next || null == head.next.next){
+            System.out.println("链表为空或链表中只有一个节点，无法反转");
+            return;
+        }
+        HeroNode reverseNode = new HeroNode();
+        HeroNode tmep = head.next;
+        /**指向当前节点的下一个位置*/
+        HeroNode curNodeNext = null;
+        while(null != tmep){
+            curNodeNext = tmep.next;
+            tmep.next = reverseNode.next;
+            reverseNode.next = tmep;
+            tmep = curNodeNext;
+        }
+        head.next = reverseNode.next;
+    }
+
+    /**从尾到头打印单列表：逆序遍历单列表
+     * 方式1：先将列表反转，再遍历，缺点：破坏列表的节点顺序，不可取
+     * 方式2：可以利用栈这个数据结构，将各个节点压入到栈中，然后利用栈先进后出的特点就实现了逆序效果
+     */
+    public void reverseOrder(HeroNode head){
+        if(null == head.next){
+            System.out.println("链表为空");
+            return;
+        }
+        /**定义一个栈*/
+        Stack<HeroNode> stack = new Stack();
+        HeroNode temp = head.next;
+        while (null != temp){
+            /**将节点压入栈中*/
+            stack.push(temp);
+            temp = temp.next;
+        }
+        /**从栈中取出*/
+        while(!stack.empty()){
+            HeroNode node = stack.pop();
+            System.out.println(node);
+        }
     }
 }
