@@ -1,5 +1,4 @@
 package com.stack;
-
 /**
  * 用数组来模拟栈操作
  */
