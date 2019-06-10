@@ -59,9 +59,11 @@ public class StackByCalculator {
             else {
                 /**存放数值时，char类型要减48才可以是int类型*/
                 keepNum += ch;
+                /**如果取到的数是最后一个字符，则不用判断下一个，直接入数栈*/
                 if(i == expression.length() - 1){
                     numStack.push(Integer.parseInt(keepNum));
                 }
+                /**否则判断当前下一个是不是符号，是则将之前的数入数栈，不是则向后取数*/
                 else if(operStack.isOperator(expression.charAt(i + 1))){
                     numStack.push(Integer.parseInt(keepNum));
                     keepNum = "";
@@ -73,6 +75,8 @@ public class StackByCalculator {
          * 并运行最后在数栈中只有一个数字，就是表达式的结果
          */
         while(true){
+            /**当符号栈为空时，表示没有要运行的数了，此时符号
+             * 栈为空，而数栈中只有一个数，即最后的运算结果*/
             if(operStack.isEmpty()){
                 break;
             }
