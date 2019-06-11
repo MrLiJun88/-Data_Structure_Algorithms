@@ -23,7 +23,7 @@ public class CalculatorBySuffix {
          * 这个方便计算，表达式的数字和符号使用空格隔开
          * */
         CalculatorBySuffix calculator = new CalculatorBySuffix();
-        String suffixExpression = "30 4 + 5 * 6 -";
+        String suffixExpression = "6 5 2 - 3 * * 2 +";
         /**
          * 思路：先将suffixExpression = "3 4 + 5 × 6 - "放到ArrayList中
          * 将ArrayList传入一个方法中，配合栈来计算
