@@ -3,7 +3,6 @@ package com.stack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-
 /**
  * 用代码实现将中缀表达式转成后缀表达式
  *
@@ -97,7 +96,7 @@ public class InfixToSuffix {
                 operStack.push(str);
             }
         }
-        /**将s1中剩余的运算符依次弹出并压入s2*/
+        /**将符号栈中剩余的运算符依次弹出并压入数栈中*/
         while(!operStack.empty()){
             store.add(operStack.pop());
         }
