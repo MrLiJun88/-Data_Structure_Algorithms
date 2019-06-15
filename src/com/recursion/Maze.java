@@ -2,6 +2,8 @@ package com.recursion;
 
 /**
  * 用递归来解决迷宫问题
+ *
+ * 并求出它的最短路径
  */
 public class Maze {
     public static void main(String[] args) {
@@ -15,7 +17,7 @@ public class Maze {
             maze[7][i] = 1;
         }
         maze[3][1] = maze[3][2] = 1;
-        maze[1][2] = maze[2][2] = 1;
+//        maze[1][2] = maze[2][2] = 1;
 
         for (int i = 0; i < 8; i++) {
             maze[i][0] = 1;
