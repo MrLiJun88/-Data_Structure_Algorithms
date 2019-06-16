@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 /**
  * 实现冒泡排序：
- *
  */
 public class BubbleSort {
     public static void main(String[] args) {
@@ -28,7 +27,9 @@ public class BubbleSort {
                 }
             }
             System.out.println(Arrays.toString(num));
-            /**在一趟排序中，一次也没有交换过*/
+            /**在一趟排序中，一次也没有交换过
+             * 则说明可以完成了排序，可以提交结束
+             * */
             if(!flag){
                 break;
             }
