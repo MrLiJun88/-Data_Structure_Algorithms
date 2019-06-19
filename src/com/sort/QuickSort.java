@@ -23,9 +23,11 @@ public class QuickSort {
         int base = num[(left + right) / 2];
 
         while(l < r){
+            /**向左找一个比base大的数*/
             while(num[l] < base){
                 l++;
             }
+            /**向右找一个比base小的数*/
             while(num[r] > base){
                 r--;
             }
@@ -36,7 +38,7 @@ public class QuickSort {
             if(l >= r){
                 break;
             }
-            /**交换两数*/
+            /**找到则交换两数*/
             int temp = 0;
             temp = num[r];
             num[r] = num[l];
