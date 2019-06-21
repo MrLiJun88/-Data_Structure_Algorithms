@@ -1,12 +1,16 @@
 package com.sort;
 
+import java.util.Arrays;
+
 /**
- * 实现快速排序(冒泡排序的改进):
+ * 递归实现快速排序(冒泡排序的改进):
  * 思想;
  * 通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，
  * 然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列
  */
 public class QuickSort {
+
+    static int count = 0;
     public static void main(String[] args) {
         int[] num = new int[]{4,1,2,-1,5,9,0,7,12,3};
         num = QuickSort.sort(num,0,num.length - 1);
@@ -51,6 +55,7 @@ public class QuickSort {
                 l++;
             }
         }
+        System.out.println("以 "  + base + " 作为基准 " + "第 " + (++count) + " 轮排序 " + Arrays.toString(num));
         /**如果 l == r,则必须 l++,r--,否则会栈溢出*/
         if(l == r){
             r--;
