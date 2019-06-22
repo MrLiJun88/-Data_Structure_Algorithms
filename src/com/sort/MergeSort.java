@@ -22,7 +22,9 @@ public class MergeSort {
 
         if(left < right){
             int mid = (left + right) / 2;
+            /**对左边进行分*/
             MergeSort.branch(num,left,mid,temp);
+            /**对右边进行分*/
             MergeSort.branch(num,mid + 1,right,temp);
 
             MergeSort.merge(num,left,right,mid,temp);
