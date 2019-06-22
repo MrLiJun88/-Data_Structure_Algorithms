@@ -6,7 +6,7 @@ package com.sort;
  */
 public class RadixSort {
     public static void main(String[] args) {
-        int[] num = new int[]{4,1,2,-1,5,9,0,7,12,3};
+        int[] num = new int[]{4,55,894,77,12,125,86};
         num = RadixSort.sort(num);
 
         for(int i : num){
@@ -15,6 +15,16 @@ public class RadixSort {
     }
 
     public static int[] sort(int[] num){
+        /**找出数组中最大的数*/
+        int max = num[0];
+        for (int i = 0; i < num.length; i++) {
+            if(max < num[i]){
+                max = num[i];
+            }
+        }
+        /**得到最大数是位数,位数决定一共要进行几轮*/
+        int maxLength = (max + "").length();
+
         /**定义一个二维数组，表示10桶，每个一维数组就是一个桶*/
         int[][] buckets = new int[10][num.length];
         /**为了记录每个桶中实际存放了多少个数据
@@ -23,26 +33,32 @@ public class RadixSort {
          * */
         int[] bucketElemCount = new int[10];
 
-        for (int i = 0; i < num.length; i++) {
-            /**取出每个元素的个位*/
-            int digitOfElem = num[i] % 10;
-            /**放入对应的桶中*/
-            buckets[digitOfElem][bucketElemCount[digitOfElem]] = num[i];
-            bucketElemCount[digitOfElem]++;
-        }
-        /**按照桶的顺序将桶中元素放入原来的数组中*/
-        int index = 0;
-        for (int i = 0; i < buckets.length; i++) {
-            /**如果桶中有数据，才放入到原数组中*/
-            if(0 != buckets[i].length) {
-                for (int j = 0; j < buckets[i].length; j++) {
-                    num[index++] = buckets[i][j];
+        for (int k = 0,n = 1;k < maxLength; k++,n *= 10) {
+            /**
+             * 针对每个元素的位数进行排序，第一次是个位
+             * 第二次是十位
+             * 第三次是百位
+             */
+            for (int i = 0; i < num.length; i++) {
+                /**取出每个元素的位数上数，开始从个数开始*/
+                int digitOfElem = num[i] /n % 10;
+                /**放入对应的桶中*/
+                buckets[digitOfElem][bucketElemCount[digitOfElem]] = num[i];
+                bucketElemCount[digitOfElem]++;
+            }
+            /**按照桶的顺序将桶中元素放入原来的数组中*/
+            int index = 0;
+            for (int i = 0; i < buckets.length; i++) {
+                /**如果桶中有数据，才放入到原数组中*/
+                if(0 != bucketElemCount[i]) {
+                    for (int j = 0; j < bucketElemCount[i]; j++) {
+                        num[index++] = buckets[i][j];
+                    }
+                    /**每轮处理后，需要要将每个桶清为0，将桶中数据清空*/
+                    bucketElemCount[i] = 0;
                 }
-                /**每轮处理后，需要要将每个桶清为0，将桶中数据清空*/
-                bucketElemCount[i] = 0;
             }
         }
-
         return num;
     }
 }
