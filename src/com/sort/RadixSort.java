@@ -19,7 +19,9 @@ public class RadixSort {
     }
 
     public static int[] sort(int[] num){
-        /**找出数组中最大的数*/
+        /**找出数组中最大的数
+         * 最大数的位数，决定了要进行多少轮
+         * */
         int max = num[0];
         for (int i = 0; i < num.length; i++) {
             if(max < num[i]){
@@ -48,10 +50,12 @@ public class RadixSort {
                 int digitOfElem = num[i] /n % 10;
                 /**放入对应的桶中*/
                 buckets[digitOfElem][bucketElemCount[digitOfElem]] = num[i];
+                /**每往桶里放一个数，就要统计该桶中有存放了多少个数据*/
                 bucketElemCount[digitOfElem]++;
             }
             /**按照桶的顺序将桶中元素放入原来的数组中*/
             int index = 0;
+            /**遍历这十个桶，将桶中数据依次放回到原数组中*/
             for (int i = 0; i < buckets.length; i++) {
                 /**如果桶中有数据，才放入到原数组中*/
                 if(0 != bucketElemCount[i]) {
