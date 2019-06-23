@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class InterpolationSearch {
     public static void main(String[] args) {
-        int[] num = new int[]{1,2,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,2,25};
+        int[] num = new int[]{2,2,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,2,25};
         List<Integer> list = InterpolationSearch.search(num,0,num.length - 1,2);
 
         for(Integer i : list){
