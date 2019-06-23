@@ -16,7 +16,6 @@ public class InterpolationSearch {
         for(Integer i : list){
             System.out.print(i + " ");
         }
-
     }
 
     public static List<Integer> search(int[] num,int left,int right,int value){

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class BinarySearch {
     public static void main(String[] args) {
-        int[] num = new int[]{89,0,1,89,10,89,78,89,234};
+        int[] num = new int[]{0,1,10,89,89,89,89,91,234};
         List<Integer> list = BinarySearch.search(num,89,0,num.length - 1);
 
         for(Integer i : list){
