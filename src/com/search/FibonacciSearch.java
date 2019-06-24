@@ -3,7 +3,7 @@ package com.search;
 import java.util.Arrays;
 
 /**
- * 实现斐波那契查找：
+ * 实现斐波那契查找(有序数组中查找)：
  *
  */
 public class FibonacciSearch {
