@@ -18,11 +18,13 @@ public class BinaryTree {
         node2.left = node5;
         BinTree tb = new BinTree(root);
 
-        tb.preOrder();
-        System.out.println("--------------");
-        tb.midOrder();
-        System.out.println("--------------");
-        tb.postOrder();
+//        tb.preOrder();
+//        System.out.println("--------------");
+//        tb.midOrder();
+//        System.out.println("--------------");
+//        tb.postOrder();
+        tb.findByPre(3);
+        tb.findByMid(5);
     }
 }
 /**创建二叉树*/
@@ -58,6 +60,24 @@ class BinTree {
         }
         else {
             System.out.println("当前二叉树为空树");
+        }
+    }
+
+    public void findByPre(int id){
+        if(null != this.root){
+            System.out.println(this.root.preFind(id));
+        }
+        else {
+            System.out.println("找不到该节点信息");
+        }
+    }
+
+    public void findByMid(int id){
+        if(null != this.root){
+            System.out.println(this.root.midFind(id));
+        }
+        else {
+            System.out.println("找不到该节点信息");
         }
     }
 }
@@ -106,5 +126,61 @@ class Node {
             this.right.postOrder();
         }
         System.out.println(this);
+    }
+
+    /**前序查找指定的节点*/
+    public Node preFind(int id){
+        if(id == this.id){
+            return this;
+        }
+        /**定义resNode，用来保存找到后返回回来的节点*/
+        Node resNode = null;
+        if(null != this.left){
+            resNode = this.left.preFind(id);
+        }
+        /**如果resNode不为null，说明已经找到了，不用再继续找，直接返回*/
+        if(null != resNode){
+            return resNode;
+        }
+        if(null != this.right){
+            resNode = this.right.preFind(id);
+        }
+        return resNode;
+    }
+    /**中序查找指定的节点*/
+    public Node midFind(int id){
+        Node resNode = null;
+        if(null != this.left){
+            resNode = this.left.midFind(id);
+        }
+        /**如果在左子树上*/
+        if(null != resNode){
+            return resNode;
+        }
+        if(id == this.id){
+            return this;
+        }
+        if(null != this.right){
+            resNode = this.right.midFind(id);
+        }
+        return resNode;
+    }
+    /**后序查找指定的节点*/
+    public Node postFind(int id){
+        Node resNode = null;
+        if(null != this.left){
+            resNode = this.left.midFind(id);
+        }
+        /**如果在左子树上*/
+        if(null != resNode){
+            return resNode;
+        }
+        if(null != this.right){
+            resNode = this.right.midFind(id);
+        }
+        if(id == this.id){
+            return this;
+        }
+        return resNode;
     }
 }
