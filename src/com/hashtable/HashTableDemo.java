@@ -17,7 +17,16 @@ public class HashTableDemo {
             hashTab.add(new Employee(i,"lijun" + i));
         }
         hashTab.list();
-        System.out.println(hashTab.get(19));
+//        Employee employee = hashTab.get(13);
+//        if(null != employee){
+//            System.out.println(employee);
+//        }
+//        else {
+//            System.out.println("查找不到，链表中没有");
+//        }
+        System.out.println("---------------");
+        hashTab.remove(6);
+        hashTab.list();
     }
 }
 /**创建hash表，用来管理多条的链表*/
@@ -29,13 +38,14 @@ class HashTab {
     public HashTab(int size){
         this.size = size;
         linkedLists = new EmpLinkedList[size];
-        /**初始化开始的链表*/
+        /**分别初始化每一条链表*/
         for (int i = 0; i < linkedLists.length; i++) {
             linkedLists[i] = new EmpLinkedList();
         }
     }
     /**添加员工链表*/
     public void add(Employee employee){
+        /**linked_index : 通过哈希函数得到应该存放在哪条链表中*/
         int linked_index = this.hashFun(employee.id);
         linkedLists[linked_index].addEmp(employee);
     }
@@ -50,7 +60,16 @@ class HashTab {
     /**根据id查找员工信息*/
     public Employee get(int id){
         int index  = this.hashFun(id);
-        return linkedLists[index].getEmp(id);
+        Employee employee = linkedLists[index].getEmp(id);
+        if(null != employee){
+            return employee;
+        }
+        return null;
+    }
+    /**根据id删除员工*/
+    public void remove(int id){
+        int index = this.hashFun(id);
+        linkedLists[index].delEmp(id);
     }
     /**散列函数，根据id值，确定要放入hash table中的哪条链表中*/
     public int hashFun(int id){
@@ -139,16 +158,38 @@ class EmpLinkedList {
         }
         Employee temp = head;
         while (true){
+            if(id == temp.id){
+                break;
+            }
+            /**查找到链表最后，还是没有找到，则置空，返回，并跳出循环*/
+            if(null == temp.next){
+                temp = null;
+                break;
+            }
+            temp = temp.next;
+        }
+        return temp;
+    }
+    /**根据id删除员工信息*/
+    public void delEmp(int id){
+        if(null == head){
+            System.out.println("链表为空，无法删除");
+            return;
+        }
+        if(id == head.id){
+            head = head.next;
+            return;
+        }
+        Employee temp = head;
+        while(true){
             if(null == temp){
                 break;
             }
-            else {
-                if(id == temp.id){
-                    return temp;
-                }
-                temp = temp.next;
+            if(id == temp.next.id){
+                temp.next = temp.next.next;
+                break;
             }
+            temp = temp.next;
         }
-        return null;
     }
 }
