@@ -1,5 +1,7 @@
 package com.hashtable;
 
+import java.util.ArrayList;
+
 /**
  * 有一个公司,当有新的员工来报道时,要求将该员工的信息加入  (id,性别,年龄,名字,住址..)
  * 当输入该员工的id时,要求查找到该员工的所有信息.
