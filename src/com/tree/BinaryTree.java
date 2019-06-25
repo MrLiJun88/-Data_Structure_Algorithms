@@ -23,14 +23,13 @@ public class BinaryTree {
         tb.midOrder();
         System.out.println("--------------");
         tb.postOrder();
-
-
     }
 }
 /**创建二叉树*/
 class BinTree {
     Node root;
     public BinTree(){}
+    /**赋值根节点*/
     public BinTree(Node root){
         this.root = root;
     }
