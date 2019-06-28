@@ -24,6 +24,7 @@ public class QuickSort {
 
         int l = left;
         int r = right;
+        /**base 定义基数，用作比较*/
         int base = num[(left + right) / 2];
 
         while(l < r){
