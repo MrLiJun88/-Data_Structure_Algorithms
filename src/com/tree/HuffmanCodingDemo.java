@@ -2,7 +2,6 @@ package com.tree;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 /**
  * 实现霍夫曼编码
  */
@@ -14,6 +13,12 @@ public class HuffmanCodingDemo {
 
     public static void main(String[] args) {
         String str = "i like like like java do you like a java";
+        byte[] huffmanCoding = HuffmanCodingDemo.generateHuffmanZip(str);
+        System.out.println("待压缩的字符串: " + str);
+        System.out.println("压缩后的结果： " + Arrays.toString(huffmanCoding));
+    }
+    /**定义一个方法，将编码的操作都封闭起来，便于我们使用*/
+    public static byte[] generateHuffmanZip(String str){
         /**统计字符串中每个字符出现的个数*/
         Map<Character,Integer> map = HuffmanCodingDemo.getWeight(str);
         /**将生成的每个节点存入List集合中*/
@@ -21,12 +26,15 @@ public class HuffmanCodingDemo {
         for (Map.Entry<Character, Integer> entry : map.entrySet()) {
             nodes.add(new HuffmanNode(entry.getKey(),entry.getValue()));
         }
+        /**创建霍夫曼树*/
         HuffmanNode huffmanNode = HuffmanCodingDemo.createHuffmanCodingTree(nodes);
-//        huffmanNode.preOrder();
-        /**根据霍夫曼树生成对应的霍夫曼编码*/
+        /**根据霍夫曼树生成对应的霍夫曼编码,保存在 Map<Character,String> codingMap 中*/
         HuffmanCodingDemo.generateHuffmanCoding(huffmanNode,"",stringBuilder);
-        System.out.println(codingMap);
+        /**转成最终的Huffman编码*/
+        byte[] huffmanCodings = HuffmanCodingDemo.compress(str,codingMap);
+        return huffmanCodings;
     }
+
     /**计算字符串中每个字符出现的个数*/
     public static Map<Character,Integer> getWeight(String str){
         Map<Character,Integer> map = new HashMap<>(16);
@@ -85,6 +93,41 @@ public class HuffmanCodingDemo {
                 codingMap.put(node.data,builder.toString());
             }
         }
+    }
+
+    /**
+     * 功能：
+     * 将要进行编码的字符转成最终的Huffman编码
+     * @param str 要进行编码的原字符串
+     * @param huffmanCoding  已经生成编码的字符码表
+     * @return  返回生成好的最终Huffman编码
+     */
+    public static byte[] compress(String str,Map<Character,String> huffmanCoding){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            Character ch = str.charAt(i);
+            stringBuilder.append(huffmanCoding.get(ch));
+        }
+        /**len 是定义字符数组的长度，因为8位代表一个字节存放，所以除8得长度
+         * 如：字符长度为 32位，字符数组长度就是 32/8=4*/
+        int len = (0 == stringBuilder.length() % 8) ? stringBuilder.length() / 8 : stringBuilder.length() / 8 + 1;
+        byte[] huffmanCodingBytes = new byte[len];
+        /**count 记录是第几个byte数组*/
+        int count = 0;
+        /**每8位对应一个byte，8位8位的存储*/
+        for (int i = 0; i < stringBuilder.length(); i += 8) {
+            String strBuffer;
+            /**每次取8位数进行存放，若最后的位数不足8位，则将剩下的位数全部存放*/
+            if(i + 8 > stringBuilder.length()){
+                strBuffer = stringBuilder.substring(i);
+            }
+            else {
+                strBuffer = stringBuilder.substring(i,i + 8);
+            }
+            /**将strBuffer转成byte*/
+            huffmanCodingBytes[count++] = (byte)Integer.parseInt(strBuffer,2);
+        }
+        return huffmanCodingBytes;
     }
 }
 /**霍夫曼节点*/
