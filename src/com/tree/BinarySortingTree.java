@@ -201,6 +201,29 @@ class LeafNode {
                 this.right.addNode(node);
             }
         }
+        /**当添加完一个节点后，如果右子树的高度与左子树的高度差值大于1，则进行左旋转*/
+        if(this.getRightHeight() - this.getLeftHeight() > 1){
+            /**如果它的右子树的左子树高度大于它的右子树的高度，先对它的右子树进行右旋转*/
+            if(null != this.right && this.right.getRightHeight() < this.right.getLeftHeight()){
+                this.right.rightRotate();
+            }
+            this.leftRotate();
+            /**这个return 是必须要的,因为已经平衡了，下面没必要再去执行*/
+            return;
+        }
+        /**当添加完一个节点后，如果左子树的高度与右子树的高度差值大于1，则进行右旋转*/
+        if(this.getLeftHeight() - this.getRightHeight() > 1){
+            /**
+             * 当满足右旋转的条件时
+             * 如果它的左子树的右子树高度大于它的左子树的高度
+             * 先对当前这个节点进行左旋转
+             * 再对当前节点进行右旋转的操作
+             */
+            if(null != this.left && this.left.getRightHeight() > this.left.getLeftHeight()){
+                this.left.leftRotate();
+            }
+            this.rightRotate();
+        }
     }
     /**中序遍历二叉树*/
     public void infixOrder(){
@@ -251,5 +274,57 @@ class LeafNode {
                return null;
            }
        }
+    }
+    /**返回当前节点的高度，以该节点为根节点的树的高度*/
+    public int getTreeHeight(){
+        return Math.max(null == left ? 0 : left.getTreeHeight(),null == right ? 0 : right.getTreeHeight()) + 1;
+    }
+    /**返回左子树的高度*/
+    public int getLeftHeight(){
+        if(null == left){
+            return 0;
+        }
+        return left.getTreeHeight();
+    }
+    /**返回右子树的高度*/
+    public int getRightHeight(){
+        if(null == right){
+            return 0;
+        }
+        return right.getTreeHeight();
+    }
+    /**左旋转*/
+    public void leftRotate(){
+        /**
+         * 1.创建新的节点，以当前根节点的权值创建的
+         * 2.将新的节点的左子树设置成当前节点的左子树
+         * 3.将新的节点的右子树设置成当前节点的右子树的左子树
+         * 4.将当前节点的值替换成右子节点的值
+         * 5.将当前节点的右子树设置成右子树的右子树
+         * 6.将当前节点的左子树设置成新的节点
+         */
+        LeafNode newNode = new LeafNode(this.value);
+        newNode.left = this.left;
+        newNode.right = this.right.left;
+        this.value = this.right.value;
+        this.right = this.right.right;
+        this.left = newNode;
+    }
+    /**右旋转*/
+    public void rightRotate(){
+        /**
+         * 1.创建新的节点，以当前根节点的权值创建的
+         * 2.将新节点的右子树设置成当前节点的右节点
+         * 3.将新节点的左子树设置成当前节点的左子树的右节点
+         * 4.将当前节点的值设置成当前节点左子节点的值
+         * 5.将当前节点的左子树设置成当前节点左子树的左子树
+         * 6.将当前节点的右子树设置成新节点
+         */
+        LeafNode newNode = new LeafNode(this.value);
+        newNode.right = this.right;
+        newNode.left = this.left.right;
+        this.value = this.left.value;
+        this.left = this.left.left;
+        this.right = newNode;
     }
 }
