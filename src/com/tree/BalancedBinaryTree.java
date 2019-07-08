@@ -2,6 +2,12 @@ package com.tree;
 
 /**
  * 实现平衡二叉树（AVL）
+ * 基本介绍
+ *   平衡二叉树也叫平衡二叉搜索树（Self-balancing binary search tree）又被称为AVL树， 可以保证查询效率较高。
+ *   具有以下特点：
+ *   它是一 棵空树或它的左右两个子树的高度差的绝对值不超过1，
+ *   并且左右两个子树都是一棵平衡二叉树。
+ *   平衡二叉树的常用实现方法有红黑树、AVL、替罪羊树、Treap、伸展树等。
  */
 public class BalancedBinaryTree {
     public static void main(String[] args) {
