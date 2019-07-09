@@ -293,7 +293,7 @@ class LeafNode {
         }
         return right.getTreeHeight();
     }
-    /**左旋转*/
+    /**左旋转,用于将二叉排序树调整成平衡二叉树*/
     public void leftRotate(){
         /**
          * 1.创建新的节点，以当前根节点的权值创建的
@@ -310,7 +310,7 @@ class LeafNode {
         this.right = this.right.right;
         this.left = newNode;
     }
-    /**右旋转*/
+    /**右旋转，用于将二叉排序树调整成平衡二叉树*/
     public void rightRotate(){
         /**
          * 1.创建新的节点，以当前根节点的权值创建的
