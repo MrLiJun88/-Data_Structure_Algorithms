@@ -3,8 +3,6 @@ package com.graph;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-
 /**
  * 用邻接数组实现对图的存储
  *
@@ -73,6 +71,7 @@ public class GraphDemo {
     }
     /**显示图对应的矩阵*/
     public void showGraph(){
+        System.out.println("图所对应的邻接矩阵");
         for(int[] link : edges){
             for (int weight : link){
                 System.out.print(weight + " ");
@@ -192,7 +191,7 @@ public class GraphDemo {
         graphDemo.addEdge(2,6,1);
         graphDemo.addEdge(5,6,1);
         /**显示图对应的邻接矩阵*/
-//        graphDemo.showGraph();
+        graphDemo.showGraph();
 //        graphDemo.dfs();
         graphDemo.bfs();
     }
