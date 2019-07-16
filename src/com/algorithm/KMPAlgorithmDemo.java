@@ -1,6 +1,5 @@
 package com.algorithm;
 
-import java.util.Arrays;
 /**
  * 实现KMP算法
  */
@@ -9,11 +8,12 @@ public class KMPAlgorithmDemo {
         String str1= "BBC ABCDAB ABCDABCDABDE";
         String str2 = "ABCDABD";
 
-        int[] next = KMPAlgorithmDemo.partialMatchingValue(str2);
-        int index = KMPAlgorithmDemo.kmpSearch(str1,str2,next);
-        System.out.println(str2 + " 对应的部分匹配表 " + Arrays.toString(next));
+//        int[] next = KMPAlgorithmDemo.partialMatchingValue(str2);
+//        int index = KMPAlgorithmDemo.kmpSearch(str1,str2,next);
+//        System.out.println(str2 + " 对应的部分匹配表 " + Arrays.toString(next));
+//        System.out.println(index);
+        int index = KMPAlgorithmDemo.kmp(str1,str2);
         System.out.println(index);
-
     }
     /**
      * kmp搜索算法*
@@ -55,5 +55,12 @@ public class KMPAlgorithmDemo {
             next[i] = j;
         }
         return next;
+    }
+    /**使用kmp算法对文档内容进行查找*/
+    public static int kmp(String str1,String str2){
+        /**根据子串得到对应的部分匹配值表*/
+        int[] next = KMPAlgorithmDemo.partialMatchingValue(str2);
+        int index = KMPAlgorithmDemo.kmpSearch(str1,str2,next);
+        return index;
     }
 }
