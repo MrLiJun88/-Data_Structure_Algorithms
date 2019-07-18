@@ -1,7 +1,10 @@
 package com.algorithm;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 实现克鲁斯卡尔算法
@@ -34,7 +37,7 @@ public class KruskalDemo {
         };
         KruskalDemo kruskalDemo = new KruskalDemo(vertexs,matrix);
         kruskalDemo.printMatrix();
-        System.out.println(Arrays.toString(kruskalDemo.getEdges()));
+        kruskalDemo.kruskal();
     }
     /**构造方法*/
     public KruskalDemo(char[] vertexs,int[][] matrix){
@@ -72,8 +75,9 @@ public class KruskalDemo {
         }
     }
     /**对边的权值进行升序*/
-    private void sortEdgeByAsc(EData[] eDatas){
-        Arrays.stream(eDatas).sorted(Comparator.comparing(EData::getWeight));
+    private EData[] sortEdgeByAsc(EData[] eDatas){
+       List<EData> list = Arrays.stream(eDatas).sorted(Comparator.comparing(EData::getWeight)).collect(Collectors.toList());
+       return list.toArray(EData[]::new);
     }
     /**返回顶点在数组中对应的下标，否则返回 -1*/
     private int getPosition(char ch){
@@ -84,7 +88,7 @@ public class KruskalDemo {
         }
         return -1;
     }
-    /**获取图中的边，放在EData[]中，然后遍历该数组
+    /**获取图中的边实例对象，放在EData[]中，然后遍历该数组
      * 是matrix[][]邻接矩阵得到的
      * */
     private EData[] getEdges(){
@@ -99,6 +103,49 @@ public class KruskalDemo {
             }
         }
         return eDatas;
+    }
+
+    /**
+     * 功能：获取下标为i的顶点的终点，用于后面判断两个顶点的终点是否相同,即是否构成了回路
+     * @param ends 存放各个顶点对应的终点是哪个，ends数组在遍历过程中，逐步形成
+     * @param i  传入顶点对应的下标
+     * @return  返回i顶点对应终点的下标
+     */
+    private int getEnd(int[] ends,int i){
+        while(0 != ends[i]){
+            i = ends[i];
+        }
+        return i;
+    }
+    /**算法实现*/
+    public void kruskal(){
+        /**定义边的start对应end顶点数组*/
+        int[] ends = new int[edgeNums];
+        EData[] eDatas = null;
+        List<EData> results = new ArrayList<>();
+        eDatas = this.getEdges();
+        /**按照边的权值大小进行升序排序*/
+        eDatas = this.sortEdgeByAsc(eDatas);
+        /**将边添加到最小生成树，并判断要加入的边是否构成回路，如果没有就加入到树中，否则不能加入*/
+        for (int i = 0; i < edgeNums; i++) {
+            /**获取到第i条边对应的顶点下标*/
+            int p1 = this.getPosition(eDatas[i].start);
+            /**获取到第i条边对应的终点下标*/
+            int p2 = this.getPosition(eDatas[i].end);
+            /**获取这这p1在已有最小生成的中对应的终点是*/
+            int m = this.getEnd(ends,p1);
+            /**获取这这p2在已有最小生成的中对应的终点是*/
+            int n = this.getEnd(ends,p2);
+            /**判断构成回路,如果 n!=m，则没有构成回路*/
+            if(n != m){
+                /**设置m 在已有最小生成树中的终点*/
+                ends[m] = n;
+                /**将最小并不构成回路的边加入到结果集合中*/
+                results.add(eDatas[i]);
+            }
+        }
+        /**统计并打印最小生成树,即输出 result[]*/
+        System.out.println("图对应的最小点生成树" + results);
     }
 }
 /**创建一个类EData，它的实例对象就是一条边*/
@@ -118,7 +165,7 @@ class EData {
     }
     @Override
     public String toString() {
-        return "EData[ start: " + this.start + " end: " + this.end + " weight: " + this.weight;
+        return "EData[ < " + this.start + " " + this.end + " > " + " weight: " + this.weight;
     }
     public int getWeight(){
         return this.weight;
